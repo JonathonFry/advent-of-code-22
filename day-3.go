@@ -317,10 +317,7 @@ And, the ASCII value of the uppercase alphabet is from 65 to 90.
 func day3Part1() {
 	var score int
 
-	trimmed := strings.TrimSuffix(day3Input, "\n")
-	trimmed = strings.TrimPrefix(trimmed, "\n")
-
-	for _, line := range strings.Split(strings.TrimSuffix(trimmed, "\n"), "\n") {
+	for _, line := range readInputAsLines(day3Input) {
 		if line == "" {
 			continue
 		}
@@ -345,9 +342,7 @@ func day3Part1() {
 func day3Part2() {
 	var score int
 
-	trimmed := strings.TrimSuffix(day3Input, "\n")
-	trimmed = strings.TrimPrefix(trimmed, "\n")
-	backpacks := strings.Split(trimmed, "\n")
+	backpacks := readInputAsLines(day3Input)
 
 	for i := 0; i < len(backpacks); i += 3 {
 		intersection := intersectThree(strings.Split(backpacks[i], ""), strings.Split(backpacks[i+1], ""), strings.Split(backpacks[i+2], ""))
@@ -360,48 +355,4 @@ func day3Part2() {
 		score += int(value)
 	}
 	println(fmt.Sprintf("Day 3 part 2: %v", score))
-}
-
-func charCodeAt(s string, n int) rune {
-	i := 0
-	for _, r := range s {
-		if i == n {
-			return r
-		}
-		i++
-	}
-	return 0
-}
-
-func intersect[T comparable](a []T, b []T) []T {
-	set := make([]T, 0)
-
-	for _, v := range a {
-		if containsGeneric(b, v) {
-			set = append(set, v)
-		}
-	}
-
-	return set
-}
-
-func intersectThree[T comparable](a []T, b []T, c []T) []T {
-	set := make([]T, 0)
-
-	for _, v := range a {
-		if containsGeneric(b, v) && containsGeneric(c, v) {
-			set = append(set, v)
-		}
-	}
-
-	return set
-}
-
-func containsGeneric[T comparable](b []T, e T) bool {
-	for _, v := range b {
-		if v == e {
-			return true
-		}
-	}
-	return false
 }

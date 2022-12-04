@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sort"
 	"strconv"
-	"strings"
 )
 
 const day1Input = `
@@ -2265,7 +2264,7 @@ func day1Part1() {
 	var total int
 	var totals []int
 
-	for _, line := range strings.Split(strings.TrimSuffix(day1Input, "\n"), "\n") {
+	for _, line := range readInputAsLines(day1Input) {
 		if line == "" || line == "\n" {
 			totals = append(totals, total)
 			total = 0
@@ -2283,14 +2282,14 @@ func day1Part1() {
 
 	max := totals[len(totals)-1]
 
-    println(fmt.Sprintf("Day 1 part 1: %v", max))
+	println(fmt.Sprintf("Day 1 part 1: %v", max))
 }
 
 func day1Part2() {
 	var total int
 	var totals []int
 
-	for _, line := range strings.Split(strings.TrimSuffix(day1Input, "\n"), "\n") {
+	for _, line := range readInputAsLines(day1Input) {
 		if line == "" || line == "\n" {
 			totals = append(totals, total)
 			total = 0

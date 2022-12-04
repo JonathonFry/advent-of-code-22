@@ -1027,7 +1027,7 @@ func day4Part1() {
 		secondArray := strings.Split(second, "-")
 		secondExploded := explode(secondArray[0], secondArray[1])
 
-		intersection := intersectTwo(firstExploded, secondExploded)
+		intersection := intersect(firstExploded, secondExploded)
 
 		if slices.Compare(intersection, firstExploded) == 0 || slices.Compare(intersection, secondExploded) == 0 {
 			score += 1
@@ -1055,7 +1055,7 @@ func day4Part2() {
 		secondArray := strings.Split(second, "-")
 		secondExploded := explode(secondArray[0], secondArray[1])
 
-		intersection := intersectTwo(firstExploded, secondExploded)
+		intersection := intersect(firstExploded, secondExploded)
 
 		if len(intersection) > 0 {
 			score += 1
@@ -1076,16 +1076,4 @@ func explode(start, end string) []int {
 		result = append(result, i)
 	}
 	return result
-}
-
-func intersectTwo[T comparable](a []T, b []T) []T {
-	set := make([]T, 0)
-
-	for _, v := range a {
-		if containsGeneric(b, v) {
-			set = append(set, v)
-		}
-	}
-
-	return set
 }

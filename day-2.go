@@ -2533,7 +2533,7 @@ A Z`
 
 func day2Part1() {
 	var score int
-	for _, line := range strings.Split(strings.TrimSuffix(day2Input, "\n"), "\n") {
+	for _, line := range readInputAsLines(day2Input) {
 		if line == "" {
 			continue
 		}
@@ -2548,7 +2548,7 @@ func day2Part1() {
 
 func day2Part2() {
 	var score int
-	for _, line := range strings.Split(strings.TrimSuffix(day2Input, "\n"), "\n") {
+	for _, line := range readInputAsLines(day2Input) {
 		if line == "" {
 			continue
 		}
