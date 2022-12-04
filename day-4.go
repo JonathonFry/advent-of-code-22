@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"golang.org/x/exp/slices"
 	"strconv"
 	"strings"
 )
@@ -1009,7 +1010,34 @@ const day4Input = `
 3-64,7-64
 `
 
-func day4() {
+func day4Part1() {
+	trimmed := strings.TrimSuffix(day4Input, "\n")
+	trimmed = strings.TrimPrefix(trimmed, "\n")
+
+	var score int
+
+	for _, line := range strings.Split(strings.TrimSuffix(trimmed, "\n"), "\n") {
+
+		pairs := strings.Split(line, ",")
+		first := pairs[0]
+		firstArray := strings.Split(first, "-")
+		firstExploded := explode(firstArray[0], firstArray[1])
+
+		second := pairs[1]
+		secondArray := strings.Split(second, "-")
+		secondExploded := explode(secondArray[0], secondArray[1])
+
+		intersection := intersectTwo(firstExploded, secondExploded)
+
+		if slices.Compare(intersection, firstExploded) == 0 || slices.Compare(intersection, secondExploded) == 0 {
+			score += 1
+		}
+	}
+
+	fmt.Println(fmt.Sprintf("Day 4 part 1: %v", score))
+}
+
+func day4Part2() {
 
 	trimmed := strings.TrimSuffix(day4Input, "\n")
 	trimmed = strings.TrimPrefix(trimmed, "\n")
@@ -1022,27 +1050,19 @@ func day4() {
 		first := pairs[0]
 		firstArray := strings.Split(first, "-")
 		firstExploded := explode(firstArray[0], firstArray[1])
-		fmt.Println(fmt.Sprintf("first: %v", firstExploded))
 
 		second := pairs[1]
 		secondArray := strings.Split(second, "-")
 		secondExploded := explode(secondArray[0], secondArray[1])
-		fmt.Println(fmt.Sprintf("second: %v", secondExploded))
 
 		intersection := intersectTwo(firstExploded, secondExploded)
-		fmt.Println(fmt.Sprintf("intersection: %v", intersection))
 
 		if len(intersection) > 0 {
 			score += 1
 		}
-
-		//		if slices.Compare(intersection, firstExploded) == 0 || slices.Compare(intersection, secondExploded) == 0 {
-		//			score += 1
-		//		}
 	}
 
-	fmt.Println(score)
-
+	fmt.Println(fmt.Sprintf("Day 4 part 2: %v", score))
 }
 
 func explode(start, end string) []int {

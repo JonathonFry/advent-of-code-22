@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -2530,9 +2531,9 @@ C Z
 C Z
 A Z`
 
-func day2() {
+func day2Part1() {
 	var score int
-    for _, line := range strings.Split(strings.TrimSuffix(day2Input, "\n"), "\n") {
+	for _, line := range strings.Split(strings.TrimSuffix(day2Input, "\n"), "\n") {
 		if line == "" {
 			continue
 		}
@@ -2542,7 +2543,22 @@ func day2() {
 
 		score += calculateScore(move, strategy)
 	}
-	println(score)
+	println(fmt.Sprintf("Day 2 part 1: %v", score))
+}
+
+func day2Part2() {
+	var score int
+	for _, line := range strings.Split(strings.TrimSuffix(day2Input, "\n"), "\n") {
+		if line == "" {
+			continue
+		}
+		moves := strings.Split(line, " ")
+		move := moveFromString(moves[0])
+		strategy := strategyFromString(move, moves[1])
+
+		score += calculateScore(move, strategy)
+	}
+	println(fmt.Sprintf("Day 2 part 2: %v", score))
 }
 
 func moveFromString(value string) Move {

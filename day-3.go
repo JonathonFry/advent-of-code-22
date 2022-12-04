@@ -313,7 +313,36 @@ The ASCII value of the lowercase alphabet is from 97 to 122.
 And, the ASCII value of the uppercase alphabet is from 65 to 90.
 -96
 */
-func day3() {
+
+func day3Part1() {
+	var score int
+
+	trimmed := strings.TrimSuffix(day3Input, "\n")
+	trimmed = strings.TrimPrefix(trimmed, "\n")
+
+	for _, line := range strings.Split(strings.TrimSuffix(trimmed, "\n"), "\n") {
+		if line == "" {
+			continue
+		}
+
+		chars := strings.Split(line, "")
+		size := len(line) / 2
+		first := chars[0:size]
+		second := chars[size:len(line)]
+		values := intersect(first, second)
+
+		value := charCodeAt(values[0], 0)
+		if unicode.IsLower(value) {
+			value -= 96
+		} else {
+			value -= 38
+		}
+
+		score += int(value)
+	}
+	println(fmt.Sprintf("Day 3 part 1: %v", score))
+}
+func day3Part2() {
 	var score int
 
 	trimmed := strings.TrimSuffix(day3Input, "\n")
@@ -321,10 +350,7 @@ func day3() {
 	backpacks := strings.Split(trimmed, "\n")
 
 	for i := 0; i < len(backpacks); i += 3 {
-		fmt.Println(i)
-		fmt.Println(backpacks[i])
-		intersection := intersect(strings.Split(backpacks[i], ""), strings.Split(backpacks[i+1], ""), strings.Split(backpacks[i+2], ""))
-		fmt.Println(fmt.Sprintf("%v", intersection))
+		intersection := intersectThree(strings.Split(backpacks[i], ""), strings.Split(backpacks[i+1], ""), strings.Split(backpacks[i+2], ""))
 		value := charCodeAt(intersection[0], 0)
 		if unicode.IsLower(value) {
 			value -= 96
@@ -333,33 +359,7 @@ func day3() {
 		}
 		score += int(value)
 	}
-
-	//	for _, line := range strings.Split(strings.TrimSuffix(day3Input, "\n"), "\n") {
-	//		if line == "" {
-	//			continue
-	//		}
-	//
-	//		chars := strings.Split(line, "")
-	//		size := len(line) / 2
-	//		first := chars[0:size]
-	//		second := chars[size:len(line)]
-	//		values := intersect(first, second)
-	//
-	//		println(line)
-	//		println(fmt.Sprintf("%v", first))
-	//		println(fmt.Sprintf("%v", second))
-	//		println(fmt.Sprintf("%v", values))
-	//
-	//		value := charCodeAt(values[0], 0)
-	//		if unicode.IsLower(value) {
-	//			value -= 96
-	//		} else {
-	//			value -= 38
-	//		}
-	//
-	//		score += int(value)
-	//	}
-	println(score)
+	println(fmt.Sprintf("Day 3 part 2: %v", score))
 }
 
 func charCodeAt(s string, n int) rune {
@@ -373,7 +373,19 @@ func charCodeAt(s string, n int) rune {
 	return 0
 }
 
-func intersect[T comparable](a []T, b []T, c []T) []T {
+func intersect[T comparable](a []T, b []T) []T {
+	set := make([]T, 0)
+
+	for _, v := range a {
+		if containsGeneric(b, v) {
+			set = append(set, v)
+		}
+	}
+
+	return set
+}
+
+func intersectThree[T comparable](a []T, b []T, c []T) []T {
 	set := make([]T, 0)
 
 	for _, v := range a {
