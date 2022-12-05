@@ -6060,3 +6060,7 @@ const day4Input = `
 64-81,47-82
 3-64,7-64
 `
+
+const Day5Input =`
+hello world
+`
